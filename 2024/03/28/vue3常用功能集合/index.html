@@ -1,0 +1,707 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/SystemImg/fluid.png">
+  <link rel="icon" href="/img/SystemImg/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="阿呆">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前言             我们在敲代码过程中会遇到一些常见的功能，列如：导出pdf,因为比较常用，代码又繁琐，所以发篇文章记录一下，省的每次找麻烦。             导出PDF 引入组件jspdf、html2canvas，jspdf-用于生成各种用途的PDF，html2canvas-可以将HTML 元素转换为Canvas。12npm i html2canvasnpm i jspdf 在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue3常用功能集合">
+<meta property="og:url" content="https://blog.moxccc.com/2024/03/28/vue3%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E9%9B%86%E5%90%88/index.html">
+<meta property="og:site_name" content="Mo博客">
+<meta property="og:description" content="前言             我们在敲代码过程中会遇到一些常见的功能，列如：导出pdf,因为比较常用，代码又繁琐，所以发篇文章记录一下，省的每次找麻烦。             导出PDF 引入组件jspdf、html2canvas，jspdf-用于生成各种用途的PDF，html2canvas-可以将HTML 元素转换为Canvas。12npm i html2canvasnpm i jspdf 在">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-28T01:07:42.000Z">
+<meta property="article:modified_time" content="2024-05-24T06:10:38.782Z">
+<meta property="article:author" content="阿呆">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>vue3常用功能集合 - Mo博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.moxccc.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Moxccc</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/SystemImg/bloginfo.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="vue3常用功能集合"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-03-28 09:07" pubdate>
+          2024年3月28日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          78 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">vue3常用功能集合</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><div class="note note-success">
+            <p>我们在敲代码过程中会遇到一些常见的功能，列如：导出pdf,因为比较常用，代码又繁琐，所以发篇文章记录一下，省的每次找麻烦。</p>
+          </div>
+
+<h3 id="导出PDF"><a href="#导出PDF" class="headerlink" title="导出PDF"></a>导出PDF</h3><ol>
+<li>引入组件<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/jspdf">jspdf</a>、<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/html2canvas/v/1.4.1">html2canvas</a>，jspdf-用于生成各种用途的PDF，html2canvas-可以将HTML 元素转换为Canvas。<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs coffeescript"><span class="hljs-built_in">npm</span> i html2canvas<br><span class="hljs-built_in">npm</span> i jspdf<br></code></pre></td></tr></table></figure></li>
+<li>在<code>utils</code>文件夹下新建<code>html2pdf.js</code>文件<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> html2canvas <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;html2canvas&#x27;</span>;<br><span class="hljs-keyword">import</span> jsPDF <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;jspdf&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title function_">htmlToPDF</span> = <span class="hljs-keyword">async</span> (<span class="hljs-params">htmlId, title= <span class="hljs-string">&quot;报表&quot;</span>, bgColor = <span class="hljs-string">&quot;#fff&quot;</span>, padding = <span class="hljs-number">10</span></span>) =&gt; &#123;<br>    <span class="hljs-keyword">let</span> pdfDom= <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(htmlId)<br>    pdfDom.<span class="hljs-property">style</span>.<span class="hljs-property">padding</span> = <span class="hljs-string">&#x27;0 10px !important&#x27;</span><br>    <span class="hljs-keyword">const</span> A4Width = <span class="hljs-number">595.28</span>;<br>    <span class="hljs-keyword">const</span> A4Height = <span class="hljs-number">841.89</span>;<br>    <span class="hljs-keyword">let</span> canvas = <span class="hljs-keyword">await</span> <span class="hljs-title function_">html2canvas</span>(pdfDom, &#123;<br>        <span class="hljs-attr">scale</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-attr">useCORS</span>: <span class="hljs-literal">true</span>,<br>        <span class="hljs-attr">backgroundColor</span>: bgColor,<br>    &#125;);<br>    <span class="hljs-comment">//canvas.width / A4Width 计算出缩放比例 即画布宽度相对于 A4 纸宽度的比例</span><br>    <span class="hljs-keyword">let</span> pageHeight = (canvas.<span class="hljs-property">width</span> / A4Width) * A4Height;<br>    <span class="hljs-keyword">let</span> leftHeight = canvas.<span class="hljs-property">height</span>;<br>    <span class="hljs-keyword">let</span> position = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> imgWidth = A4Width - padding * <span class="hljs-number">2</span>;<br>    <span class="hljs-keyword">let</span> imgHeight = (A4Width / canvas.<span class="hljs-property">width</span>) * canvas.<span class="hljs-property">height</span>;<br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">     根据自身业务需求  是否在此处键入下方水印代码</span><br><span class="hljs-comment">    */</span><br>    <span class="hljs-keyword">let</span> pageData = canvas.<span class="hljs-title function_">toDataURL</span>(<span class="hljs-string">&quot;image/jpeg&quot;</span>, <span class="hljs-number">1.0</span>);<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable constant_">PDF</span> = <span class="hljs-keyword">new</span> <span class="hljs-title function_">jsPDF</span>(<span class="hljs-string">&quot;p&quot;</span>, <span class="hljs-string">&#x27;pt&#x27;</span>, <span class="hljs-string">&#x27;a4&#x27;</span>);<br>    <span class="hljs-keyword">if</span> (leftHeight &lt; pageHeight) &#123;<br>        <span class="hljs-comment">// 控制内边距</span><br>        <span class="hljs-variable constant_">PDF</span>.<span class="hljs-title function_">addImage</span>(pageData, <span class="hljs-string">&quot;JPEG&quot;</span>, <span class="hljs-number">10</span>, <span class="hljs-number">20</span>, imgWidth, imgHeight);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">let</span> pageImgIndex=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">while</span> (leftHeight &gt; <span class="hljs-number">0</span>) &#123;<br>            canvas = <span class="hljs-keyword">await</span> <span class="hljs-title function_">html2canvas</span>(pdfDom, &#123;<br>                <span class="hljs-attr">scale</span>: <span class="hljs-number">2</span>,<br>                <span class="hljs-attr">useCORS</span>: <span class="hljs-literal">true</span>,<br>                <span class="hljs-attr">backgroundColor</span>: bgColor,<br>            &#125;);<br>            <span class="hljs-keyword">let</span> pageData = canvas.<span class="hljs-title function_">toDataURL</span>(<span class="hljs-string">&quot;image/jpeg&quot;</span>, <span class="hljs-number">1.0</span>);<br>            <span class="hljs-comment">// -A4Height*pageImgIndex 每页的起始位置 20距顶部</span><br>            <span class="hljs-variable constant_">PDF</span>.<span class="hljs-title function_">addImage</span>(pageData, <span class="hljs-string">&quot;JPEG&quot;</span>, <span class="hljs-number">10</span>, -A4Height*pageImgIndex+<span class="hljs-number">20</span>, imgWidth, imgHeight);<br>            leftHeight -= pageHeight;<br>            position -= A4Height;<br>            <span class="hljs-keyword">if</span> (leftHeight &gt; <span class="hljs-number">0</span>) <span class="hljs-variable constant_">PDF</span>.<span class="hljs-title function_">addPage</span>();<br>            pageImgIndex+=<span class="hljs-number">1</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-variable constant_">PDF</span>.<span class="hljs-title function_">save</span>(title + <span class="hljs-string">&quot;.pdf&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li>若需要水印，则在上方注释中粘贴下方代码<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs mel">const ctx: any = <span class="hljs-keyword">canvas</span>.getContext(<span class="hljs-string">&#x27;2d&#x27;</span>);<br>ctx.textAlign = <span class="hljs-string">&#x27;center&#x27;</span>;<br>ctx.textBaseline = <span class="hljs-string">&#x27;middle&#x27;</span>;<br>ctx.<span class="hljs-keyword">rotate</span>((<span class="hljs-number">20</span> * Math.PI) / <span class="hljs-number">180</span>);<br>ctx.font = <span class="hljs-string">&#x27;20px Microsoft Yahei&#x27;</span>;<br>ctx.fillStyle = <span class="hljs-string">&#x27;rgba(184, 184, 184, 0.8)&#x27;</span>;<br><span class="hljs-keyword">for</span> (let i = <span class="hljs-keyword">canvas</span>.width * <span class="hljs-number">-1</span>; i &lt; <span class="hljs-keyword">canvas</span>.width; i += <span class="hljs-number">240</span>) &#123;<br>    <span class="hljs-keyword">for</span> (let j = <span class="hljs-keyword">canvas</span>.height * <span class="hljs-number">-1</span>; j &lt; <span class="hljs-keyword">canvas</span>.height; j += <span class="hljs-number">200</span>) &#123;<br>        <span class="hljs-comment">// 填充文字，x 间距, y 间距</span><br>        ctx.fillText(<span class="hljs-string">&#x27;水印名&#x27;</span>, i, j);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li>在页面中使用<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-comment">// 1.引入</span><br>import &#123;htmlToPDF&#125;  <span class="hljs-selector-tag">form</span> <span class="hljs-string">&#x27;@/utils/html2pdf.js&#x27;</span><br><br><span class="hljs-comment">// 2.使用</span><br><span class="hljs-function"><span class="hljs-title">htmlToPDF</span><span class="hljs-params">(`需要绘制元素ID`,`文件名称`)</span></span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="使用富文本编辑器"><a href="#使用富文本编辑器" class="headerlink" title="使用富文本编辑器"></a>使用富文本编辑器</h3><ol>
+<li>我使用的是<a target="_blank" rel="noopener" href="https://www.wangeditor.com/v5/">wangEditor</a>，首先先安装插件<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs coffeescript"><span class="hljs-built_in">npm</span> i @wangeditor/editor-<span class="hljs-keyword">for</span>-vue@next<br></code></pre></td></tr></table></figure></li>
+<li>富文本编辑器一般都是以组件使用的，在<code>components</code>文件夹下新建<code>Editor/index.vue</code>文件，写入以下代码<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;editor&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">Toolbar</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;border-bottom: 1px solid #ccc&quot;</span> <span class="hljs-attr">:editor</span>=<span class="hljs-string">&quot;editorRef&quot;</span> <span class="hljs-attr">:defaultConfig</span>=<span class="hljs-string">&quot;toolbarConfig&quot;</span> /&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">Editor</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;height: 350px; overflow-y: hidden&quot;</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;form.content&quot;</span> <span class="hljs-attr">:defaultConfig</span>=<span class="hljs-string">&quot;editorConfig&quot;</span></span><br><span class="hljs-tag">            @<span class="hljs-attr">onCreated</span>=<span class="hljs-string">&quot;handleCreated&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">setup</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript"><span class="hljs-keyword">import</span> &#123; reactive, shallowRef, onBeforeUnmount, watch &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span></span><br><span class="language-javascript"><span class="hljs-keyword">import</span> axios <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;axios&quot;</span>;</span><br><span class="language-javascript"></span><br><span class="language-javascript"><span class="hljs-comment">// 富文本编辑器</span></span><br><span class="language-javascript"><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Editor</span>, <span class="hljs-title class_">Toolbar</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@wangeditor/editor-for-vue&#x27;</span></span><br><span class="language-javascript"><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;@wangeditor/editor/dist/css/style.css&#x27;</span> <span class="hljs-comment">// 引入 css</span></span><br><span class="language-javascript"></span><br><span class="language-javascript"><span class="hljs-comment">//这里是父组件传过来的内容</span></span><br><span class="language-javascript"><span class="hljs-keyword">let</span> props = <span class="hljs-title function_">defineProps</span>(&#123;</span><br><span class="language-javascript">    <span class="hljs-title class_">EditorContent</span>: &#123;</span><br><span class="language-javascript">        <span class="hljs-attr">type</span>: <span class="hljs-title class_">String</span>,</span><br><span class="language-javascript">        <span class="hljs-attr">default</span>: <span class="hljs-string">&#x27;&#x27;</span></span><br><span class="language-javascript">    &#125;</span><br><span class="language-javascript">&#125;)</span><br><span class="language-javascript"><span class="hljs-comment">// 富文本内容</span></span><br><span class="language-javascript"><span class="hljs-keyword">const</span> form = <span class="hljs-title function_">reactive</span>(&#123;</span><br><span class="language-javascript">    <span class="hljs-attr">content</span>: <span class="hljs-string">&#x27;&#x27;</span></span><br><span class="language-javascript">&#125;)</span><br><span class="language-javascript"><span class="hljs-comment">// 编辑器实例，必须用 shallowRef</span></span><br><span class="language-javascript"><span class="hljs-keyword">const</span> editorRef = <span class="hljs-title function_">shallowRef</span>()</span><br><span class="language-javascript"><span class="hljs-keyword">const</span> toolbarConfig = &#123;</span><br><span class="language-javascript">    </span><br><span class="language-javascript">&#125;</span><br><span class="language-javascript"></span><br><span class="language-javascript"><span class="hljs-comment">// 记录 editor 实例，重要！</span></span><br><span class="language-javascript"><span class="hljs-keyword">const</span> <span class="hljs-title function_">handleCreated</span> = (<span class="hljs-params">editor</span>) =&gt; &#123;</span><br><span class="language-javascript">    editorRef.<span class="hljs-property">value</span> = editor</span><br><span class="language-javascript">    <span class="hljs-comment">// 传入内容</span></span><br><span class="language-javascript">    editorRef.<span class="hljs-property">value</span>.<span class="hljs-title function_">setHtml</span>(props.<span class="hljs-property">EditorContent</span>);</span><br><span class="language-javascript">&#125;</span><br><span class="language-javascript"></span><br><span class="language-javascript"><span class="hljs-comment">// 自定义富文本上传图片，若不需要可忽略，</span></span><br><span class="language-javascript"><span class="hljs-keyword">const</span> <span class="hljs-title function_">uploadImg</span> = (<span class="hljs-params">file, insertFn</span>) =&gt; &#123;</span><br><span class="language-javascript">    <span class="hljs-keyword">let</span> imgData = <span class="hljs-keyword">new</span> <span class="hljs-title class_">FormData</span>();</span><br><span class="language-javascript">    imgData.<span class="hljs-title function_">append</span>(<span class="hljs-string">&quot;file&quot;</span>, file);</span><br><span class="language-javascript">    <span class="hljs-comment">//这里是调用接口，imgData这个是参数</span></span><br><span class="language-javascript">    axios.<span class="hljs-title function_">post</span>(<span class="hljs-string">`api`</span>, imgData, &#123;</span><br><span class="language-javascript">        <span class="hljs-attr">headers</span>: &#123;</span><br><span class="language-javascript">            <span class="hljs-string">&quot;Authorization&quot;</span>: <span class="hljs-string">&quot;Bearer &quot;</span> + token,</span><br><span class="language-javascript">            <span class="hljs-string">&#x27;Content-Type&#x27;</span>: <span class="hljs-string">&#x27;multipart/form-data&#x27;</span></span><br><span class="language-javascript">        &#125;</span><br><span class="language-javascript">    &#125;).<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> &#123;</span><br><span class="language-javascript">        <span class="hljs-comment">//把图片赋值在输入框内</span></span><br><span class="language-javascript">        <span class="hljs-title function_">insertFn</span>(res.<span class="hljs-property">data</span>.<span class="hljs-property">data</span>);</span><br><span class="language-javascript">    &#125;).<span class="hljs-title function_">catch</span>(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> &#123;</span><br><span class="language-javascript">        <span class="hljs-title class_">Notification</span>.<span class="hljs-title function_">warning</span>(&#123;</span><br><span class="language-javascript">            <span class="hljs-attr">title</span>: <span class="hljs-string">&quot;提示&quot;</span>,</span><br><span class="language-javascript">            <span class="hljs-attr">content</span>: <span class="hljs-string">&quot;上传失败,请重新上传&quot;</span></span><br><span class="language-javascript">        &#125;);</span><br><span class="language-javascript">    &#125;);</span><br><span class="language-javascript">&#125;</span><br><span class="language-javascript"></span><br><span class="language-javascript"><span class="hljs-comment">// 富文本默认配置</span></span><br><span class="language-javascript"><span class="hljs-keyword">const</span> editorConfig = &#123;</span><br><span class="language-javascript">    <span class="hljs-attr">placeholder</span>: <span class="hljs-string">&#x27;请输入内容...&#x27;</span>,</span><br><span class="language-javascript">    <span class="hljs-attr">MENU_CONF</span>: &#123;</span><br><span class="language-javascript">        <span class="hljs-attr">uploadImage</span>: &#123;</span><br><span class="language-javascript">            <span class="hljs-comment">// 自定义上传图片 方法</span></span><br><span class="language-javascript">            <span class="hljs-attr">customUpload</span>: uploadImg,</span><br><span class="language-javascript">            <span class="hljs-comment">// server: `api`</span></span><br><span class="language-javascript">        &#125;,</span><br><span class="language-javascript">    &#125;</span><br><span class="language-javascript">&#125;</span><br><span class="language-javascript"></span><br><span class="language-javascript"><span class="hljs-comment">// 组件销毁时，也及时销毁编辑器</span></span><br><span class="language-javascript"><span class="hljs-title function_">onBeforeUnmount</span>(<span class="hljs-function">() =&gt;</span> &#123;</span><br><span class="language-javascript">    <span class="hljs-keyword">const</span> editor = editorRef.<span class="hljs-property">value</span></span><br><span class="language-javascript">    <span class="hljs-keyword">if</span> (editor == <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span></span><br><span class="language-javascript">    editor.<span class="hljs-title function_">destroy</span>()</span><br><span class="language-javascript">&#125;)</span><br><span class="language-javascript"></span><br><span class="language-javascript"></span><br><span class="language-javascript"><span class="hljs-comment">//父组件调用此方法，用于获取富文本框编辑器的内容</span></span><br><span class="language-javascript"><span class="hljs-keyword">const</span> <span class="hljs-title function_">getHtml</span> = (<span class="hljs-params"></span>) =&gt; &#123;</span><br><span class="language-javascript">    <span class="hljs-keyword">return</span> editorRef.<span class="hljs-property">value</span>.<span class="hljs-title function_">getHtml</span>()</span><br><span class="language-javascript">&#125;</span><br><span class="language-javascript"></span><br><span class="language-javascript"><span class="hljs-title function_">defineExpose</span>(&#123; getHtml &#125;)</span><br><span class="language-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;scss&quot;</span> <span class="hljs-attr">scoped</span>&gt;</span><span class="language-css"></span><br><span class="language-css"><span class="hljs-selector-class">.editor</span> &#123;</span><br><span class="language-css">    <span class="hljs-attribute">border</span>: <span class="hljs-number">1px</span> solid <span class="hljs-built_in">var</span>(--color-border-<span class="hljs-number">3</span>);</span><br><span class="language-css"></span><br><span class="language-css">    &amp;<span class="hljs-selector-class">.w-e-full-screen-container</span> &#123;</span><br><span class="language-css">        <span class="hljs-attribute">z-index</span>: <span class="hljs-number">9999</span>;</span><br><span class="language-css">    &#125;</span><br><span class="language-css"></span><br><span class="language-css">    :<span class="hljs-built_in">deep</span>(.w-e-modal) &#123;</span><br><span class="language-css">        <span class="hljs-attribute">position</span>: fixed;</span><br><span class="language-css">        <span class="hljs-attribute">top</span>: <span class="hljs-number">50%</span> <span class="hljs-meta">!important</span>;</span><br><span class="language-css">        <span class="hljs-attribute">left</span>: <span class="hljs-number">50%</span> <span class="hljs-meta">!important</span>;</span><br><span class="language-css">        <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translate</span>(-<span class="hljs-number">50%</span>, -<span class="hljs-number">50%</span>);</span><br><span class="language-css">    &#125;</span><br><span class="language-css">&#125;</span><br><span class="language-css"></span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
+<li>扩展 一 <code>html代码编辑</code>，组件默认是没有html代码预览和编写功能的，需要自己自定义此功能，在<code>components</code>文件夹下新建<code>Editor/plugins/preHeml.js</code>文件，写入以下代码<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Boot</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@wangeditor/editor&#x27;</span><br><span class="hljs-comment">// 定义菜单 class</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyModalMenu</span> &#123;<br>  title = <span class="hljs-string">&quot;code&quot;</span>;<br>  <span class="hljs-comment">//图标</span><br>  iconSvg = <span class="hljs-string">`&lt;svg t=&quot;1658298161465&quot; class=&quot;icon&quot; viewBox=&quot;0 0 1024 1024&quot; version=&quot;1.1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; p-id=&quot;2392&quot; width=&quot;200&quot; height=&quot;200&quot;&gt;&lt;path d=&quot;M390.272 919.552a53.077333 53.077333 0 0 1-38.186667-16.128L35.84 578.602667a96.298667 96.298667 0 0 1 0-133.333334l316.245333-324.821333a53.333333 53.333333 0 0 1 76.416 74.410667l-294.4 302.208a21.333333 21.333333 0 0 0 0 29.866666l294.4 302.165334a53.333333 53.333333 0 0 1-38.4 90.538666zM633.770667 919.552a53.333333 53.333333 0 0 1-38.4-90.538667l294.4-302.208a21.333333 21.333333 0 0 0 0-29.866666l-294.4-302.165334a53.333333 53.333333 0 0 1 76.416-74.410666l316.202666 324.778666a96.298667 96.298667 0 0 1 0 133.333334l-316.245333 324.864a53.077333 53.077333 0 0 1-37.973333 16.213333z m277.930666-399.914667z&quot; p-id=&quot;2393&quot;&gt;&lt;/path&gt;&lt;/svg&gt;`</span>;<br>  tag = <span class="hljs-string">&quot;button&quot;</span>;<br>  showModal = <span class="hljs-literal">true</span>;<br>  modalWidth = <span class="hljs-variable language_">window</span>.<span class="hljs-property">innerWidth</span> * <span class="hljs-number">0.6</span>;<br>  $content = <span class="hljs-literal">null</span>;<br>  <span class="hljs-comment">// eslint-disable-next-line no-unused-vars</span><br>  <span class="hljs-title function_">getValue</span>(<span class="hljs-params">editor</span>) &#123;<br>    <span class="hljs-comment">// 用不到 getValue</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>;<br>  &#125;<br>  <span class="hljs-title function_">isActive</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>  &#125;<br>  <span class="hljs-title function_">isDisabled</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>  &#125;<br>  <span class="hljs-comment">// eslint-disable-next-line no-unused-vars</span><br>  <span class="hljs-keyword">async</span> <span class="hljs-title function_">exec</span>(<span class="hljs-params">editor, value</span>) &#123; &#125;<br>  <span class="hljs-comment">// eslint-disable-next-line no-unused-vars</span><br>  <span class="hljs-title function_">getModalPositionNode</span>(<span class="hljs-params">editor</span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>  &#125;<br>  <span class="hljs-comment">// eslint-disable-next-line no-unused-vars</span><br>  <span class="hljs-title function_">getModalContentElem</span>(<span class="hljs-params">editor</span>) &#123;<br>    <span class="hljs-keyword">const</span> textarea = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&quot;textarea&quot;</span>);<br>    <span class="hljs-keyword">const</span> h2 = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&quot;h2&quot;</span>);<br>    <span class="hljs-keyword">const</span> $content = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&quot;div&quot;</span>);<br>    <span class="hljs-keyword">const</span> updatabutton = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&quot;button&quot;</span>);<br>    <span class="hljs-keyword">const</span> cancelbutton = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&quot;button&quot;</span>);<br>    <span class="hljs-keyword">const</span> div = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&quot;div&quot;</span>);<br>    <br>    <span class="hljs-title function_">setstyle</span>($content, &#123;<br>      <span class="hljs-attr">maxHeight</span>: <span class="hljs-string">&quot;600px&quot;</span>,<br>      <span class="hljs-attr">overflowY</span>: <span class="hljs-string">&quot;auto&quot;</span>,<br>      <span class="hljs-attr">position</span>: <span class="hljs-string">&quot;relative&quot;</span>,<br>      <span class="hljs-attr">overflowX</span>: <span class="hljs-string">&quot;hidden&quot;</span>,<br>      <span class="hljs-attr">width</span>: <span class="hljs-string">&quot;100%&quot;</span>,<br>    &#125;);<br>    <span class="hljs-comment">// 文本框</span><br>    <span class="hljs-title function_">setstyle</span>(textarea, &#123;<br>      <span class="hljs-attr">minHeight</span>: <span class="hljs-string">&quot;450px&quot;</span>,<br>      <span class="hljs-attr">width</span>: <span class="hljs-string">`90%`</span>,<br>      <span class="hljs-attr">padding</span>: <span class="hljs-string">&quot;0&quot;</span>,<br>      <span class="hljs-attr">marginLeft</span>: <span class="hljs-string">&quot;50%&quot;</span>,<br>      <span class="hljs-attr">transform</span>: <span class="hljs-string">&quot;translateX(-50%)&quot;</span>,<br>    &#125;);<br>    <span class="hljs-title function_">setstyle</span>(h2, &#123;<br>      <span class="hljs-attr">textAlign</span>: <span class="hljs-string">&quot;concent&quot;</span>,<br>    &#125;);<br>    <span class="hljs-comment">//修改按钮</span><br>    <span class="hljs-title function_">setstyle</span>(div, &#123;<br>      <span class="hljs-attr">display</span>: <span class="hljs-string">&quot;flex&quot;</span>,<br>      <span class="hljs-attr">justifyContent</span>: <span class="hljs-string">&quot;flex-end&quot;</span>,<br>      <span class="hljs-attr">margin</span>: <span class="hljs-string">&quot;30px 0&quot;</span>,<br>    &#125;);<br>    <span class="hljs-keyword">const</span> button = &#123;<br>      <span class="hljs-attr">right</span>: <span class="hljs-string">&quot;40px&quot;</span>,<br>    &#125;;<br><br>    <span class="hljs-title function_">setstyle</span>(cancelbutton, &#123; ...button, ...&#123;&#125; &#125;);<br>    <span class="hljs-title function_">setstyle</span>(updatabutton, &#123;<br>      ...button,<br>      ...&#123; <span class="hljs-attr">backgroundColor</span>: <span class="hljs-string">&quot;#F0F8FF&quot;</span>, <span class="hljs-attr">marginLeft</span>: <span class="hljs-string">&quot;30px&quot;</span> &#125;,<br>    &#125;);<br><br>    h2.<span class="hljs-property">innerText</span> = <span class="hljs-string">&quot;code&quot;</span>;<br>    updatabutton.<span class="hljs-property">innerText</span> = <span class="hljs-string">&quot;修改&quot;</span>;<br>    cancelbutton.<span class="hljs-property">innerText</span> = <span class="hljs-string">&quot;取消&quot;</span>;<br><br>    textarea.<span class="hljs-property">value</span> = editor.<span class="hljs-title function_">getHtml</span>();<br>    div.<span class="hljs-title function_">appendChild</span>(cancelbutton);<br>    div.<span class="hljs-title function_">appendChild</span>(updatabutton);<br>    $content.<span class="hljs-title function_">appendChild</span>(h2);<br>    $content.<span class="hljs-title function_">appendChild</span>(textarea);<br>    $content.<span class="hljs-title function_">appendChild</span>(div);<br><br>    <span class="hljs-keyword">const</span> updata = updatabutton.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-keyword">let</span> text = textarea.<span class="hljs-property">value</span>.<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/&#x27;/g</span>, <span class="hljs-string">&quot;&#x27;&quot;</span>)<br>      <span class="hljs-keyword">if</span> (text === <span class="hljs-string">&#x27;&#x27;</span>) text = <span class="hljs-string">&#x27; &#x27;</span><br>      <span class="hljs-comment">// const area = document.getElementById(&#x27;w-e-textarea-1&#x27;)</span><br>      <span class="hljs-comment">// area.innerHTML = text</span><br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(text)<br>      editor.<span class="hljs-title function_">setHtml</span>(text)<br>      editor.<span class="hljs-title function_">hidePanelOrModal</span>()<br>      updatabutton.<span class="hljs-title function_">removeEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>, updata)<br>    &#125;)<br>    <span class="hljs-keyword">const</span> cancel = cancelbutton.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-function">() =&gt;</span> &#123;<br>      editor.<span class="hljs-title function_">hidePanelOrModal</span>()<br>      cancelbutton.<span class="hljs-title function_">removeEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>, cancel)<br>    &#125;)<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">$content</span> = $content<br>    <span class="hljs-keyword">return</span> $content<br><br>  &#125;<br>&#125;<br><br><span class="hljs-comment">// 定义菜单配置</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> menuConf = &#123;<br>  <span class="hljs-attr">key</span>: <span class="hljs-string">&#x27;preHtmlCode&#x27;</span>, <span class="hljs-comment">// menu key ，唯一。注册之后，可配置到工具栏</span><br>  <span class="hljs-title function_">factory</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyModalMenu</span>()<br>  &#125;,<br>&#125;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">setstyle</span>(<span class="hljs-params">dom, styles</span>) &#123;<br>  <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(styles).<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">style</span>) =&gt;</span> &#123;<br>      dom.<span class="hljs-property">style</span>[style] = styles[style];<br>  &#125;);<br>&#125;<br><br><span class="hljs-title class_">Boot</span>.<span class="hljs-title function_">registerMenu</span>(menuConf)<br></code></pre></td></tr></table></figure></li>
+<li>在<code>Editor/index.vue</code>使用<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-comment">//引入</span><br>import &#123; menuConf &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./plugins/preHeml.js&quot;</span>;<br><br><span class="hljs-comment">//注册</span><br><span class="hljs-keyword">const</span> toolbarConfig = &#123;<br>    insertKeys: &#123;<br>        <span class="hljs-keyword">index</span>: <span class="hljs-number">0</span>,<br>        keys: [<span class="hljs-string">&#x27;preHtmlCode&#x27;</span>, <span class="hljs-string">&quot;|&quot;</span>]<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li>页面中使用<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-comment">//使用组件 如果你的富文本框组件是放在弹框里使用的需要用v-if去判断组件的显示/隐藏</span><br>&lt;Editor <span class="hljs-built_in">ref</span>=<span class="hljs-string">&quot;EditorRef&quot;</span>  v-<span class="hljs-keyword">if</span>=<span class="hljs-string">&quot;visible&quot;</span> v-model:EditorContent=<span class="hljs-string">&quot;form.content&quot;</span>&gt;&lt;/Editor&gt;<br><br><span class="hljs-comment">// 定义富文本框编辑器元素</span><br>const EditorRef=<span class="hljs-built_in">ref</span><span class="hljs-literal">()</span>;<br><br><span class="hljs-comment">//在提交的时候调用组件方法获取编辑器内容</span><br>form.content=<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">EditorRef</span>.</span></span>value.get<span class="hljs-constructor">Html()</span>;<br></code></pre></td></tr></table></figure></li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Vue3/" class="category-chain-item">Vue3</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%89%8D%E7%AB%AF/">#前端</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>vue3常用功能集合</div>
+      <div>https://blog.moxccc.com/2024/03/28/vue3常用功能集合/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>阿呆</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年3月28日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/12/15/Github%E4%BD%BF%E7%94%A8Webhook%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E6%9B%B4%E6%96%B0/" title="Github使用Webhook功能实现自动更新">
+                        <span class="hidden-mobile">Github使用Webhook功能实现自动更新</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/gitalk/1.8.0/gitalk.min.js', function() {
+        var options = Object.assign(
+          {"clientID":"d01b3f94ee4b2a85ca5f","clientSecret":"cecc3804137e3ae8c3ccdfe40c0468a13915065c","repo":"moxccc.github.io","owner":"moxccc","admin":["moxccc"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":false,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
+          {
+            id: '5e81009740ae64c0d156fd92f2ae8b88'
+          }
+        )
+        var gitalk = new Gitalk(options);
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/moxccc" target="_blank" rel="nofollow noopener"><span>Moxccc</span></a> 
+    </div>
+  
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      苏ICP备2023014248号-1
+    </a>
+  </span>
+  
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
